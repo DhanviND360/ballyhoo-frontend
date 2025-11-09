@@ -15,6 +15,9 @@ AI	OpenRouter API (GPT-4o-mini) for language generation
 Infra	CORS-enabled REST, JSON endpoints, fetch-based API bridge
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+VIDEO LINK
+https://drive.google.com/file/d/1SAgrsQOMyY4VTFywBwsucu0m0VO-OxPN/view?usp=drivesdk
+
 ## Getting Started
 
 First, run the development server:
