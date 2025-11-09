@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-type Item = { platform:string; title:string; url:string; metrics?:any; published_at?:string };
+type Item = { platform:string; title:string; url:string; metrics?:any; published_at?:string; thumbnail?: string };
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
@@ -86,18 +86,19 @@ export default function Explore() {
                   <td>{r.platform}</td>
                   <td>{r.title}</td>
                   <td>
-  {r.platform === "YouTube" && r.thumbnail && (
-    <img src={r.thumbnail} width={120} style={{borderRadius:8}} />
-  )}
-  {r.platform !== "YouTube" && (
+  {r.platform === "YouTube" ? (
+    r.thumbnail ? (
+      <img src={r.thumbnail} width={120} style={{borderRadius:8}} />
+    ) : (
+      <span className="badge">n/a</span>
+    )
+  ) : (
     <span className="badge">n/a</span>
   )}
 </td>
 <td><span className="badge">
   {r.platform==="YouTube" ? `${r.metrics?.views ?? 0} views` :
    r.platform==="Reddit" ? `${r.metrics?.score ?? 0} score` : "-"}
-   if(platform==="gtrends") endpoint="trends/gtrends"
-
 </span></td>
 <td><a href={r.url ?? "#"} target="_blank">Open</a></td>
 <td className="row-actions">
