@@ -1,26 +1,159 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg:#0b0b0c;
+  --card:#141416;
+  --text:#f5f5f9;
+  --muted:#9b9ba6;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* PINK NEON brand */
+  --accent:#ff2f7f;
+  --accent2:#ff6ff0;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,47,127,0.16) 0%, transparent 35%),
+    radial-gradient(circle at 70% 80%, rgba(255,111,240,0.14) 0%, transparent 42%),
+    var(--bg);
 }
+
+
+* { box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,Arial; }
+a{ color:inherit; text-decoration:none; }
+.container{ max-width:1100px; margin:0 auto; padding:24px; }
+.btn{ background:var(--accent); color:white; border:none; padding:12px 18px; border-radius:10px; cursor:pointer; font-weight:600; }
+.btn.secondary{ background:#2a2a31; }
+.grid{ display:grid; gap:16px; }
+.cards{ grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); }
+.card{ background:var(--card); border:1px solid #22232a; border-radius:16px; padding:18px; min-height:160px; display:flex; flex-direction:column; justify-content:space-between; }
+.h1{ font-size:42px; font-weight:800; margin:24px 0 8px; }
+.h2{ font-size:28px; font-weight:700; margin:24px 0 8px; }
+.sub{ color:var(--muted); }
+.table{ width:100%; border-collapse:collapse; margin-top:16px; }
+.table th,.table td{ padding:10px 12px; border-bottom:1px solid #2a2a31; text-align:left; }
+.badge{ display:inline-block; padding:4px 8px; border-radius:999px; background:#2a2a31; color:#d6d6df; font-size:12px; }
+.row-actions{ display:flex; gap:8px; align-items:center; }
+.icon{ width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; background:#2a2a31; cursor:pointer;}
+.note{ color:#c7c7d4; font-size:13px; }
+.footer-gap{ height:24px; }
+/* ---- SOFT NEON GRADIENT CARD HOVERS ---- */
+.card {
+  position: relative;
+  transition: all 0.35s ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(120deg,var(--accent),#e96b6f,var(--accent2));
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  z-index: -1;
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 0 24px rgba(255,47,127,0.28);
+
+}
+
+.card:hover::after {
+  opacity: 0.8;
+}
+/* ---- STACK CAROUSEL (fixed) ---- */
+.stack-section {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 28px;   /* top, left/right, bottom */
+}
+
+.stack-container {
+  position: relative;
+  width: 620px;          /* fixed width so it doesn't collapse */
+  height: 120px;         /* reserves space so it won't overlap cards */
+  perspective: 1200px;
+  pointer-events: none;  /* purely decorative */
+}
+
+.stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.stack-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 260px;
+  height: 110px;
+  transform: translate(-50%, -50%);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255,47,127,0.22), rgba(255,111,240,0.18));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 10px 30px rgba(255,47,127,0.20);
+  color: var(--text);
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+  transition: transform .6s ease, opacity .4s ease, filter .3s ease;
+}
+
+/* depth + slight offsets so you see all three */
+.stack-card:nth-child(1) {
+  transform: translate(-50%, -50%) translateZ(-60px) translateY(14px) rotateX(10deg);
+  opacity: .45; z-index: 1; filter: saturate(.9);
+}
+.stack-card:nth-child(2) {
+  transform: translate(-50%, -50%) translateZ(-30px) translateY(7px) rotateX(5deg);
+  opacity: .75; z-index: 2; filter: saturate(.95);
+}
+.stack-card:nth-child(3) {
+  transform: translate(-50%, -50%) translateZ(0) rotateX(0);
+  opacity: 1;   z-index: 3;
+}
+
+/* gentle idle motion so it feels alive */
+@keyframes stack-breathe {
+  0%,100% { transform: translate(-50%, -50%) translateZ(0) rotateX(0deg); }
+  50%     { transform: translate(-50%, -48%) translateZ(10px) rotateX(-1.5deg); }
+}
+.stack-card:nth-child(3) { animation: stack-breathe 6s ease-in-out infinite; }
+
+/* hide on very small screens */
+@media (max-width: 640px) {
+  .stack-container { display: none; }
+}
+/* --- infinite marquee --- */
+.marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 50px;
+}
+
+.marquee {
+  display: flex;
+  gap: 24px;
+  animation: marquee 25s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee-item {
+  font-weight: 600;
+  color: var(--text);
+  padding: 10px 22px;
+  border-radius: 14px;
+  background: linear-gradient(140deg, rgba(255,47,127,0.22), rgba(255,111,240,0.18));
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(9px);
+  box-shadow: 0 0 18px rgba(255,47,127,0.25);
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
