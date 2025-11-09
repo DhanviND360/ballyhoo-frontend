@@ -1,4 +1,22 @@
+Overview
+
+Ballyhoo.ai is a full-stack SaaS MVP that automates trend discovery → idea generation → script creation for short-form video creators.
+
+Creators today waste hours manually scanning YouTube, Instagram, Reddit, etc. to see what’s hot. Ballyhoo.ai streamlines this: it fetches trending topics, analyzes them, and uses an LLM to generate hooks, content ideas, captions, and short-script formats in seconds.
+
+This reduces 2-3 hours of ideation work to under 15 seconds — turning creators from “researching” into publishing.
+
+Tech Stack
+Layer	Stack
+Frontend	Next.js + React + Tailwind, deployed on Vercel
+Backend	FastAPI (Python), deployed on Railway
+Data Sources	YouTube Data API • Reddit Hot API • Google Trends (pytrends) • Instagram via Apify
+AI	OpenRouter API (GPT-4o-mini) for language generation
+Infra	CORS-enabled REST, JSON endpoints, fetch-based API bridge
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+VIDEO LINK
+https://drive.google.com/file/d/1SAgrsQOMyY4VTFywBwsucu0m0VO-OxPN/view?usp=drivesdk
 
 ## Getting Started
 
